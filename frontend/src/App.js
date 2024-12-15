@@ -1,33 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Greeting from "./components/Greeting";
 
 const App = () => {
-  const [name, setName] = useState("");
-  const [greeting, setGreeting] = useState("");
+    const [emails, setEmails] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  const fetchGreeting = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/greet/${name}`);
-      setGreeting(response.data.message);
-    } catch (error) {
-      console.error("Error fetching greeting:", error);
-    }
-  };
+    useEffect(() => {
+        // Fetch data immediately and then every minute
+        fetchEmails();
+        const intervalId = setInterval(fetchEmails, 60000); // 60000ms = 1 minute
 
-  return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>React + FastAPI App</h1>
-      <input
-        type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <button onClick={fetchGreeting}>Get Greeting</button>
-      <Greeting message={greeting} />
-    </div>
-  );
+        // Cleanup the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, []);
+
+    const fetchEmails = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get("http://localhost:8000/read_all/"); // FastAPI endpoint
+            setEmails(response.data);
+        } catch (err) {
+            setError("Failed to fetch emails.");
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+
+    return (
+        <div style={{ padding: "20px", fontFamily: "Arial" }}>
+            <h1>Emails (Auto-Refreshing Every Minute)</h1>
+            <ul style={{ listStyle: "none", padding: 0 }}>
+                {emails.map((email) => (
+                    <li key={email.id} style={{ marginBottom: "20px", padding: "10px", border: "1px solid #ddd" }}>
+                        <h3>{email.subject}</h3>
+                        <p>{email.body}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default App;
