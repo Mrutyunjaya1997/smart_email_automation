@@ -30,7 +30,7 @@ const App = () => {
             const response = await axios.get("http://localhost:8000/read_all/");
             const newEmailList = response.data.map((email) => ({
                 ...email,
-                isRead: false, // Add `isRead` field for tracking
+                isRead: false, // Add isRead field for tracking
             }));
 
             // Check for new messages

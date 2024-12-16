@@ -1,0 +1,19 @@
+.email-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.email-cards {
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .active button {
+  background-color: #007bff;
+  color: white;
+}

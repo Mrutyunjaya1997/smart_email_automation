@@ -1,0 +1,23 @@
+.email-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.email-card.unread {
+  background-color: #f8d7da;
+}
+
+.email-card.read {
+  background-color: #d4edda;
+}
+
+.email-card h3 {
+  margin: 0;
+}
+
+.email-card button {
+  margin-top: 10px;
+}
