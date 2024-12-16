@@ -25,7 +25,7 @@ scheduler = BackgroundScheduler()
 async def lifespan(app: FastAPI):
     # Startup logic
     print("Starting application and scheduler...")
-    scheduler.add_job(fetch_and_insert_data, "interval", minutes=1)
+    scheduler.add_job(fetch_and_insert_data, "interval", minutes=0.5)
     scheduler.start()
     yield  # App runs here
     # Shutdown logic
