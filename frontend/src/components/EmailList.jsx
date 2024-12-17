@@ -10,7 +10,7 @@ const EmailList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [emailsPerPage] = useState(5); // Items per page
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortByUnread, setSortByUnread] = useState(false);
+  const [sortByUnread, setSortByUnread] = useState(true);
 
   // Fetch emails from the backend
   const fetchEmails = async () => {
@@ -25,7 +25,7 @@ const EmailList = () => {
   // Fetch emails on component mount
   useEffect(() => {
     fetchEmails();
-    const interval = setInterval(fetchEmails, 10000); // Refresh every minute
+    const interval = setInterval(fetchEmails, 10000); // Refresh every 10 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -46,10 +46,24 @@ const EmailList = () => {
       email.body.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Sort emails by read/unread if toggled
-  const sortedEmails = sortByUnread
-    ? filteredEmails.sort((a, b) => b.isRead - a.isRead)
-    : filteredEmails;
+  // Function to get priority order
+  const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+
+  // Sort emails by read/unread and priority
+  const sortedEmails = filteredEmails
+    .sort((a, b) => {
+      // First, sort by unread status (if sortByUnread is true)
+      if (sortByUnread) {
+        if (a.isRead === b.isRead) {
+          // If both have the same read status, then sort by priority
+          return priorityOrder[a.priority] - priorityOrder[b.priority];
+        }
+        return a.isRead ? 1 : -1;
+      } else {
+        // If sortByUnread is false, just sort by priority
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+      }
+    });
 
   // Pagination logic
   const indexOfLastEmail = currentPage * emailsPerPage;
