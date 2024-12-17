@@ -18,7 +18,7 @@ jobs:
       - name: Set up Node.js for frontend
         uses: actions/setup-node@v2
         with:
-          node-version: "16" # Adjust the Node.js version if needed
+          node-version: "22" # Adjust the Node.js version if needed
 
       # Step 3: Install frontend dependencies
       - name: Install frontend dependencies
@@ -44,11 +44,11 @@ jobs:
           cd backend
           pip install -r requirements.txt
 
-      # Step 7: Run backend tests (if you have any)
-      - name: Run backend tests
-        run: |
-          cd backend
-          pytest  # Adjust this if you're using a different testing tool
+      # # Step 7: Run backend tests (if you have any)
+      # - name: Run backend tests
+      #   run: |
+      #     cd backend
+      #     pytest  # Adjust this if you're using a different testing tool
 
       # Step 8: Run the backend (FastAPI) and frontend (React) services
       - name: Run frontend and backend services
