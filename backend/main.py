@@ -81,6 +81,8 @@ def get_emails(email_db: db_dependancy, read_mail_db: read_db_dependancy):
             "id": email.id,
             "subject": email.subject,
             "body": email.body,
+            "priority": email.priority,
+            "sentiment": email.sentiment,
             "isRead": email.id in read_ids
         }
         for email in emails

@@ -8,7 +8,9 @@ def insert_dataframe_into_db(df: pd.DataFrame, db: Session):
     for _, row in df.iterrows():
         entry = Emails_Data(
             subject = row['subject'],  # Replace with actual column names
-            body=row['body']
+            body=row['body'],
+            priority = row['Priority'],
+            sentiment = row['Sentiment']
         )
         db.add(entry)
     db.commit()

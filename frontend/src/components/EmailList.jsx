@@ -25,7 +25,7 @@ const EmailList = () => {
   // Fetch emails on component mount
   useEffect(() => {
     fetchEmails();
-    const interval = setInterval(fetchEmails, 60000); // Refresh every minute
+    const interval = setInterval(fetchEmails, 10000); // Refresh every minute
     return () => clearInterval(interval);
   }, []);
 
