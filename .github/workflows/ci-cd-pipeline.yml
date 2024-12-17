@@ -1,0 +1,68 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - mj_dev # Trigger the workflow when code is pushed to the mj_dev branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js for frontend (React app)
+      - name: Set up Node.js for frontend
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # Adjust the Node.js version if needed
+
+      # Step 3: Install frontend dependencies
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      # Step 4: Build frontend
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      # Step 5: Set up Python environment for backend (FastAPI)
+      - name: Set up Python for backend
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12.3" # Adjust the Python version based on your FastAPI setup
+
+      # Step 6: Install backend dependencies
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      # Step 7: Run backend tests (if you have any)
+      - name: Run backend tests
+        run: |
+          cd backend
+          pytest  # Adjust this if you're using a different testing tool
+
+      # Step 8: Run the backend (FastAPI) and frontend (React) services
+      - name: Run frontend and backend services
+        run: |
+          # Start the frontend and backend
+          cd frontend && npm start &  # Run frontend in background
+          cd backend && uvicorn main:app --host 0.0.0.0 --port 8000 &  # Run FastAPI backend
+          sleep 10  # Wait for apps to start
+
+          # Test the backend is running by making a simple request
+          curl http://localhost:8000  # Adjust the URL if necessary for your FastAPI API
+
+      # Step 9: Create Pull Request to merge into main
+      - name: Create Pull Request to merge into main
+        if: success()
+        run: |
+          gh pr create --base main --head mj_dev --title "Automated PR" --body "This is an automated pull request to merge mj_dev into main"
