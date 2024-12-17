@@ -11,8 +11,8 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [newEmails, setNewEmails] = useState([]);
-    const [lastUpdated, setLastUpdated] = useState(Date.now());
     const [filter, setFilter] = useState("all"); // Track filter type: 'all', 'read', 'unread'
+
 
     useEffect(() => {
         fetchEmails();
@@ -22,7 +22,7 @@ const App = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [filter, emails]);
+    }, []);
 
     const fetchEmails = async () => {
         try {
@@ -43,7 +43,6 @@ const App = () => {
 
             if (newMessages.length > 0) {
                 setNewEmails(newMessages);
-                setLastUpdated(Date.now());
             }
         } catch (err) {
             setError("Failed to fetch emails.");
