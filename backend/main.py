@@ -35,6 +35,7 @@ async def lifespan(app: FastAPI):
 # FastAPI app setup
 app = FastAPI(lifespan=lifespan)
 
+# Interaction with react app
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # Allow React app
