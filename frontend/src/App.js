@@ -22,7 +22,7 @@ const App = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [filter,newEmails]);
+    }, [filter,emails]);
 
     const fetchEmails = async () => {
         try {
