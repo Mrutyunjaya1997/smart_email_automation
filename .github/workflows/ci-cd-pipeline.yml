@@ -22,14 +22,14 @@ jobs:
 
       # Step 3: Install frontend dependencies
       - name: Install frontend dependencies
-        env:
-          CI: false # Disable CI behavior to allow warnings
         run: |
           cd frontend
           npm install
 
       # Step 4: Build frontend
       - name: Build frontend
+        env:
+          CI: false # Disable CI behavior to allow warnings
         run: |
           cd frontend
           npm run build
