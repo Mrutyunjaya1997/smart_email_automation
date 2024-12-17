@@ -18,11 +18,11 @@ const App = () => {
         fetchEmails();
         const intervalId = setInterval(fetchEmails, 10000); // Refresh every minute
         return () => clearInterval(intervalId);
-    });
+    }, []);
 
     useEffect(() => {
         applyFilter();
-    });
+    }, [filter,newEmails]);
 
     const fetchEmails = async () => {
         try {
