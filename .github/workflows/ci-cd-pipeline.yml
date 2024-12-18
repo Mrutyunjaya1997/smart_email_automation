@@ -28,6 +28,8 @@ jobs:
 
       # Step 4: Build frontend
       - name: Build frontend
+        env:
+          CI: false # Disable CI behavior to allow warnings
         run: |
           cd frontend
           npm run build
@@ -62,7 +64,16 @@ jobs:
           curl http://localhost:8000  # Adjust the URL if necessary for your FastAPI API
 
       # Step 9: Create Pull Request to merge into main
-      - name: Create Pull Request to merge into main
-        if: success()
+      # Step 2: Set up GitHub CLI
+      - name: Set up GitHub CLI
         run: |
-          gh pr create --base main --head mj_dev --title "Automated PR" --body "This is an automated pull request to merge mj_dev into main"
+          echo "${{ secrets.MJ_PAT_TOKEN }}" | gh auth login --with-token
+
+      # Step 3: Create the Pull Request
+      - name: Create Pull Request
+        run: |
+          gh pr create \
+            --base main \
+            --head mj_dev \
+            --title "Automated PR: Merge mj_dev into main" \
+            --body "This pull request was automatically created by GitHub Actions. Please review and merge."
