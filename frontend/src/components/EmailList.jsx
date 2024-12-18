@@ -20,7 +20,7 @@ const EmailList = () => {
             : "https://smart-email-automation.onrender.com";
 
     try {
-      const response = await axios.get("${API_BASE_URL}/read_all/");
+      const response = await axios.get(`${API_BASE_URL}/read_all`);
       setEmails(response.data);
     } catch (error) {
       console.error("Error fetching emails:", error);
