@@ -25,9 +25,14 @@ const App = () => {
     }, [filter,emails]);
 
     const fetchEmails = async () => {
+        const API_BASE_URL =
+            process.env.NODE_ENV === "development"
+            ? "http://127.0.0.1:8000"
+            : "https://smart-email-automation.onrender.com";
+
         try {
             setLoading(true);
-            const response = await axios.get("http://localhost:8000/read_all/");
+            const response = await axios.get("${API_BASE_URL}/read_all/");
             const newEmailList = response.data.map((email) => ({
                 ...email,
                 isRead: false, // Add isRead field for tracking
