@@ -32,7 +32,7 @@ const App = () => {
 
         try {
             setLoading(true);
-            const response = await axios.get("${API_BASE_URL}/read_all/");
+            const response = await axios.get(`${API_BASE_URL}/read_all`);
             const newEmailList = response.data.map((email) => ({
                 ...email,
                 isRead: false, // Add isRead field for tracking
