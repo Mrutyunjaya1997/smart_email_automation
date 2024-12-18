@@ -14,8 +14,13 @@ const EmailList = () => {
 
   // Fetch emails from the backend
   const fetchEmails = async () => {
+    const API_BASE_URL =
+            process.env.NODE_ENV === "development"
+            ? "http://127.0.0.1:8000"
+            : "https://smart-email-automation.onrender.com";
+
     try {
-      const response = await axios.get("http://127.0.0.1:8000/read_all/");
+      const response = await axios.get("${API_BASE_URL}/read_all/");
       setEmails(response.data);
     } catch (error) {
       console.error("Error fetching emails:", error);
@@ -31,8 +36,12 @@ const EmailList = () => {
 
   // Mark email as read
   const markAsRead = async (emailId) => {
+    const API_BASE_URL =
+            process.env.NODE_ENV === "development"
+            ? "http://127.0.0.1:8000"
+            : "https://smart-email-automation.onrender.com";
     try {
-      await axios.put(`http://127.0.0.1:8000/read_all/${emailId}/mark-as-read`);
+      await axios.put(`${API_BASE_URL}/read_all/${emailId}/mark-as-read`);
       fetchEmails(); // Refresh the email list
     } catch (error) {
       console.error("Error marking email as read:", error);
