@@ -45,7 +45,9 @@ The `backend/` folder contains the FastAPI application.
    pip install -r requirements.txt
    ```
 
-4. Run the FastAPI application:
+4. Set the PRODUCTION=False while testing locally and PRODUCTION=True while deploying in production.
+
+5. Run the FastAPI application:
    ```bash
    uvicorn main:app --reload
    ```
