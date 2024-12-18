@@ -44,7 +44,7 @@ else:
 # Interaction with react app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Allow React app
+    allow_origins=[url],  # Allow React app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
