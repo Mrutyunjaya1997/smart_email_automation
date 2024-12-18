@@ -11,11 +11,11 @@ from sentiment_analysis import analyze_sentiment
 load_dotenv()
 
 # Access the environment variables
-OPEN_AI_API_KEY = os.getenv('GPT_API_KEY')
-CLIENT_ID = os.getenv('CLIENT_ID')
-CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-TENANT_ID = os.getenv('TENANT_ID')
-USER_EMAIL = os.getenv('USER_EMAIL')
+OPEN_AI_API_KEY = os.environ.get('GPT_API_KEY')
+CLIENT_ID = os.environ.get('CLIENT_ID')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+TENANT_ID = os.environ.get('TENANT_ID')
+USER_EMAIL = os.environ.get('USER_EMAIL')
 
 def get_df_from_outlook():
     subject_list = []
