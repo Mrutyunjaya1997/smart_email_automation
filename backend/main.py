@@ -9,6 +9,7 @@ from read_email import get_df_from_outlook
 from utils import insert_dataframe_into_db
 from apscheduler.schedulers.background import BackgroundScheduler
 from contextlib import asynccontextmanager
+from config import PRODUCTION
 
 
 def fetch_and_insert_data():
@@ -34,6 +35,11 @@ async def lifespan(app: FastAPI):
 
 # FastAPI app setup
 app = FastAPI(lifespan=lifespan)
+
+if PRODUCTION:
+    url = "https://smart-email-automation-frontend.onrender.com"
+else:
+    url = "http://localhost:3000"
 
 # Interaction with react app
 app.add_middleware(

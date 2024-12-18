@@ -25,6 +25,10 @@ const App = () => {
     }, [filter,emails]);
 
     const fetchEmails = async () => {
+        process.env.NODE_ENV === "development"
+        ? "http://127.0.0.1:8000"
+        : "https://smart-email-automation.onrender.com";
+
         try {
             setLoading(true);
             const response = await axios.get("http://localhost:8000/read_all/");
