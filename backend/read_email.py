@@ -11,7 +11,7 @@ from sentiment_analysis import analyze_sentiment
 load_dotenv()
 
 # Access the environment variables
-OPEN_AI_API_KEY = os.environ.get('GPT_API_KEY')
+OPEN_AI_API_KEY = os.environ.get('OPEN_AI_API_KEY')
 CLIENT_ID = os.environ.get('CLIENT_ID')
 CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 TENANT_ID = os.environ.get('TENANT_ID')
