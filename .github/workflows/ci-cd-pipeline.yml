@@ -55,7 +55,7 @@ jobs:
       # Step 8: Run the backend (FastAPI) and frontend (React) services
       - name: Run frontend and backend services
         env:
-          GPT_API_KEY: ${{ secrets.GPT_API_KEY }}
+          OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           TENANT_ID: ${{ secrets.TENANT_ID }}
